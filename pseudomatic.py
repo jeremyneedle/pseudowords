@@ -1,10 +1,10 @@
 ### pseudomatic.py
 
-'Last Modified: 2017-1-23'
+'Last Modified: 2017-3-17'
 'Jeremy M. Needle; Northwestern University, Department of Linguistics'
 'Wordovators Project; PI: Janet B. Pierrehumbert, University of Oxford'
 
-'Description: This tool generates pseudoword strings based on corpus-learned phonotactics, using a Finite State Machine from a text sample. The FSM is built on n-graph statistics for n >= 2. The elements are symbols (single letters). Input corpus may be phonemic or orthographic, but each element should be a single character (so the phonemic alphabet must be monosymbolic, like DISC).'
+'Description: This tool generates pseudoword strings based on corpus-learned phonotactics, using a Finite State Machine from a text sample. The FSM is built on n-graph statistics for n >= 2. The elements are symbols (single ASCII letters). Input corpus may be phonemic or orthographic, but each element should be a single character (so the phonemic alphabet must be monosymbolic, like DISC).'
 '	Output may include real words, including those in the training corpus.'
 '	Functions are available to compute the harmonic mean transitional probability for words (as sum of logs), as a "goodness" score for the pseudowords.'
 
