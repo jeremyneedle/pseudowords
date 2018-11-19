@@ -1,0 +1,73 @@
+Using SRILM.txt
+
+- Install
+1. Downloaded zipped archive from SRILM
+2. followed INSTALL instructions, added /bin and /bin/macosx to path in my ~/.bash_profile file
+3. 'gnumake test', takes a while, everything looks 'IDENTICAL'
+4. 'gnumake cleanest'
+5. done.
+
+- Using issues and notes
+1. 'ngram-count' builds the language model (http://www.speech.sri.com/projects/srilm/manpages/ngram-count.1.html)
+	# Be aware what smoothing method is default, and over what orders.
+2. Input format is 1 'sentence' per line, space delimited; for phonotactics, that's 1 word per line, spaces between each symbol.
+	# E.g., 'a b a c u s'
+3. 'ngram' applies the language model (http://www.speech.sri.com/projects/srilm/manpages/ngram.1.html)
+	ngram -lm <ngram_model_file>
+	ngram -ppl <sentence_file_to_generate_probabilities_and_perplexities_for>
+		#different -debug options give different outputs
+4. pysrilm may also be helpful, though I haven't used it: (https://github.com/njsmith/pysrilm)
+
+- Following 'icslp2002-srilm.pdf'
+	A standard LM (trigram with Good-Turing discounting and Katz backoff for smoothing) would be created by
+ngram-count -text TRAINDATA -lm LM
+	The resulting LM may then be evaluated on a test corpus using
+ngram -lm LM -ppl TESTDATA -debug 2
+
+- Using issues and notes
+1. 'ngram-count' builds the language model (http://www.speech.sri.com/projects/srilm/manpages/ngram-count.1.html)
+2. Input format is 1 'sentence' per line, space delimited; for phonotactics, that's 1 word per line, spaces between each symbol
+3. n/a
+4. 'ngram' applies the language model (http://www.speech.sri.com/projects/srilm/manpages/ngram.1.html)
+	ngram -lm <ngram_model_file>
+	ngram -ppl <sentence_file_to_generate_probabilities_and_perplexities_for>
+		#different -debug options give different outputs
+
+- Example Use
+	- Input lexicon is DISC lexicon; looks like this:
+# #
+{ b @ k @ s
+@ b { n d @ n
+@ b 1 s
+@ b { S
+	
+	- Build the LM, order 1-3 with interpolated Witten-Bell
+ngram-count -text lexicon.txt -lm LM_wbi3_lexicon.lm -order 3 -wbdiscount -interpolate
+
+	- Generate some test items and output to a file
+ngram -lm LM_wbi3_lexicon.lm -gen 100 > gen_disc_spaced100.txt
+
+	- Get the probability of the generated items, 'gen_disc_spaced100.txt' and output to a file
+ngram -lm LM_wbi3_lexicon.lm -ppl gen_disc_spaced100.txt -debug 1 > PPL_gen100_wbi3.txt
+
+	- Convert PPL output files to CSV using 'srilm_format.py'; in current version, this means manually editing the target filename into srilm_format.py and then running it.
+python srilm_format.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
