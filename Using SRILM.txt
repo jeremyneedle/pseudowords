@@ -24,15 +24,6 @@ ngram-count -text TRAINDATA -lm LM
 	The resulting LM may then be evaluated on a test corpus using
 ngram -lm LM -ppl TESTDATA -debug 2
 
-- Using issues and notes
-1. 'ngram-count' builds the language model (http://www.speech.sri.com/projects/srilm/manpages/ngram-count.1.html)
-2. Input format is 1 'sentence' per line, space delimited; for phonotactics, that's 1 word per line, spaces between each symbol
-3. n/a
-4. 'ngram' applies the language model (http://www.speech.sri.com/projects/srilm/manpages/ngram.1.html)
-	ngram -lm <ngram_model_file>
-	ngram -ppl <sentence_file_to_generate_probabilities_and_perplexities_for>
-		#different -debug options give different outputs
-
 - Example Use
 	- Input lexicon is DISC lexicon; looks like this:
 # #
