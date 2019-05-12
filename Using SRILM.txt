@@ -10,8 +10,10 @@ Using SRILM.txt
 - Using issues and notes
 1. 'ngram-count' builds the language model (http://www.speech.sri.com/projects/srilm/manpages/ngram-count.1.html)
 	# Be aware what smoothing method is default, and over what orders.
-2. Input format is 1 'sentence' per line, space delimited; for phonotactics, that's 1 word per line, spaces between each symbol.
-	# E.g., 'a b a c u s'
+2. Input format is 1 'sentence' per line, space delimited; for phonotactics (and orthotactics), that's 1 word per line, spaces between each symbol.
+	E.g., 'a b a c u s'
+	NOTE: You can use multi-character symbols (e.g. 'AE B AX K AX S'); as in CMU, ARPABET, SAMPA, etc.
+	
 3. 'ngram' applies the language model (http://www.speech.sri.com/projects/srilm/manpages/ngram.1.html)
 	ngram -lm <ngram_model_file>
 	ngram -ppl <sentence_file_to_generate_probabilities_and_perplexities_for>
@@ -19,12 +21,12 @@ Using SRILM.txt
 4. pysrilm may also be helpful, though I haven't used it: (https://github.com/njsmith/pysrilm)
 
 - Following 'icslp2002-srilm.pdf'
-	A standard LM (trigram with Good-Turing discounting and Katz backoff for smoothing) would be created by
+	A standard LM (trigram with Good-Turing discounting and Katz backoff for smoothing) would be created by:
 ngram-count -text TRAINDATA -lm LM
-	The resulting LM may then be evaluated on a test corpus using
+	The resulting LM may then be evaluated on a test corpus using:
 ngram -lm LM -ppl TESTDATA -debug 2
 
-- Example Use
+- Example Use, Walkthrough
 	- Input lexicon is DISC lexicon; looks like this:
 # #
 { b @ k @ s
@@ -41,7 +43,7 @@ ngram -lm LM_wbi3_lexicon.lm -gen 100 > gen_disc_spaced100.txt
 	- Get the probability of the generated items, 'gen_disc_spaced100.txt' and output to a file
 ngram -lm LM_wbi3_lexicon.lm -ppl gen_disc_spaced100.txt -debug 1 > PPL_gen100_wbi3.txt
 
-	- Convert PPL output files to CSV using 'srilm_format.py'; in current version, this means manually editing the target filename into srilm_format.py and then running it.
+	- Convert PPL output files to CSV using 'srilm_format.py'; in current version, this means manually editing the target filename into srilm_format.py and then running it. (This part is custom; there is probably a better way to get the SRILM output into CSV for analysis, but I don't know it.)
 python srilm_format.py
 
 
